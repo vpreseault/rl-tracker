@@ -1,19 +1,20 @@
 from datetime import date
 import math
 
-
 class Session:
-    def __init__(self, startMmr):
+    def __init__(self, store, startMmr):
         print(f"Starting MMR: {startMmr}")
         self.startMmr = startMmr
         self.endMmr = startMmr
         self.games = []
-        self.date = date.today()
+        self.date = str(date.today())
+        self.store = store
 
     def loop(self):
         looping = True
         lossCount = 0
         while looping:
+            # quit loop even without two losses
             gameScore = input(f"Game result: ")
             gameResult = self.convertScoreToWinLoss(gameScore)
 
@@ -55,3 +56,5 @@ class Session:
         print(f"Session +/-: \n{record} ({winrate}%)\n")
         print(f"MMR +/-: \n{self.endMmr - self.startMmr}\n")
         print("-" * DASH_FACTOR)
+
+        self.store.addSession(self.date, self.games, self.startMmr, self.endMmr)

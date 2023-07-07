@@ -1,4 +1,6 @@
 from Session import Session
+from Store import Store
 
-s = Session(1108)
+store = Store()
+s = Session(store, store.getCurrentMmr())
 s.loop()
