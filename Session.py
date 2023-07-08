@@ -50,7 +50,7 @@ class Session:
         DASH_FACTOR = 41
         
         gamesPlayed = self.wins + self.losses
-        winrate = math.floor(self.wins / gamesPlayed)
+        winrate = math.floor((self.wins / gamesPlayed)*100)
 
         self.endMmr = int(input("What is the ending MMR? "))
         print("-" * DASH_FACTOR)
