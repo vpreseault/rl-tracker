@@ -1,0 +1,23 @@
+{
+  "s14": {
+    "regular_season": {
+      "wins": 0,
+      "losses": 0,
+      "start_mmr": 0,
+      "current_mmr": 0,
+      "end_mmr": 0
+    },
+    "sessions": [
+      {
+        "date": "",
+        "wins": 0,
+        "losses": 0,
+        "winrate": 0,
+        "games": [],
+        "scores": [{ "myScore": 0, "opponentScore": 0 }],
+        "start_mmr": 0,
+        "end_mmr": 0
+      }
+    ]
+  }
+}

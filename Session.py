@@ -48,12 +48,7 @@ class Session:
 
     def endSessionDebrief(self):
         DASH_FACTOR = 41
-
-        # numGames = len(self.games)
-        # record = sum(self.games)
-        # winrate = math.floor(
-        #     ((math.floor(numGames / 2) + math.ceil(record / 2)) / numGames) * 100
-        # )
+        
         gamesPlayed = self.wins + self.losses
         winrate = math.floor(self.wins / gamesPlayed)
 
