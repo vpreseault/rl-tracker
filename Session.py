@@ -37,8 +37,8 @@ class Session:
         self.endSessionDebrief()
 
     def logGameData(self, score):
-        myScore = score[0]
-        opponentScore = score[1]
+        myScore = int(score[0])
+        opponentScore = int(score[1])
         self.scores.append({"myScore": myScore, "opponentScore": opponentScore})
         if myScore > opponentScore:
             self.wins += 1
