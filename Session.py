@@ -1,27 +1,30 @@
 from datetime import date
 import math
 
+
 class Session:
     def __init__(self, store, startMmr):
+        self.store = store
+
         print(f"Starting MMR: {startMmr}")
         self.startMmr = startMmr
         self.endMmr = startMmr
+        self.wins = 0
+        self.losses = 0
         self.games = []
+        self.scores = []
         self.date = str(date.today())
-        self.store = store
 
     def loop(self):
         looping = True
-        lossCount = 0
         while looping:
             # quit loop even without two losses
             gameScore = input(f"Game result: ")
-            gameResult = self.convertScoreToWinLoss(gameScore)
+            gameResult = self.logGameData(gameScore)
 
             self.games.append(gameResult)
             if gameResult == -1:
-                lossCount += 1
-                if lossCount > 1:
+                if self.losses > 1:
                     pitConfirm = ""
                     while pitConfirm != "y" and pitConfirm != "n":
                         pitConfirm = input(
@@ -33,28 +36,42 @@ class Session:
 
         self.endSessionDebrief()
 
-    def convertScoreToWinLoss(self, score):
+    def logGameData(self, score):
         myScore = score[0]
         opponentScore = score[1]
+        self.scores.append({"myScore": myScore, "opponentScore": opponentScore})
         if myScore > opponentScore:
+            self.wins += 1
             return 1
+        self.losses += 1
         return -1
 
     def endSessionDebrief(self):
         DASH_FACTOR = 41
 
-        numGames = len(self.games)
-        record = sum(self.games)
-        winrate = math.floor(
-            ((math.floor(numGames / 2) + math.ceil(record / 2)) / numGames) * 100
-        )
+        # numGames = len(self.games)
+        # record = sum(self.games)
+        # winrate = math.floor(
+        #     ((math.floor(numGames / 2) + math.ceil(record / 2)) / numGames) * 100
+        # )
+        gamesPlayed = self.wins + self.losses
+        winrate = math.floor(self.wins / gamesPlayed)
 
         self.endMmr = int(input("What is the ending MMR? "))
         print("-" * DASH_FACTOR)
         print(f"{'-'*3} End of Session Debrief {self.date} {'-'*3}")
-        print(f"Games played: \n{numGames}\n")
-        print(f"Session +/-: \n{record} ({winrate}%)\n")
+        print(f"Games played: \n{gamesPlayed}\n")
+        print(f"Wins: {self.wins}, Losses: {self.losses}, winrate: {winrate}%\n")
         print(f"MMR +/-: \n{self.endMmr - self.startMmr}\n")
-        print("-" * DASH_FACTOR)
+        input("-" * DASH_FACTOR)
 
-        self.store.addSession(self.date, self.games, self.startMmr, self.endMmr)
+        self.store.addSession(
+            self.date,
+            self.wins,
+            self.losses,
+            winrate,
+            self.games,
+            self.scores,
+            self.startMmr,
+            self.endMmr,
+        )
