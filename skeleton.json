@@ -3,6 +3,7 @@
     "regular_season": {
       "wins": 0,
       "losses": 0,
+      "winrate": 0,
       "start_mmr": 0,
       "current_mmr": 0,
       "end_mmr": 0
