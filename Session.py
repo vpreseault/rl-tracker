@@ -20,19 +20,22 @@ class Session:
         while looping:
             # quit loop even without two losses
             gameScore = input(f"Game result: ")
-            gameResult = self.logGameData(gameScore)
+            if gameScore == "q":
+                looping = False
+            else:
+                gameResult = self.logGameData(gameScore)
 
-            self.games.append(gameResult)
-            if gameResult == -1:
-                if self.losses > 1:
-                    pitConfirm = ""
-                    while pitConfirm != "y" and pitConfirm != "n":
-                        pitConfirm = input(
-                            "Box. Box. Losses are stacking. End session? (y/n) "
-                        )
+                self.games.append(gameResult)
+                if gameResult == -1:
+                    if self.losses > 1:
+                        pitConfirm = ""
+                        while pitConfirm != "y" and pitConfirm != "n":
+                            pitConfirm = input(
+                                "Box. Box. Losses are stacking. End session? (y/n) "
+                            )
 
-                    if pitConfirm == "y":
-                        looping = False
+                        if pitConfirm == "y":
+                            looping = False
 
         self.endSessionDebrief()
 
