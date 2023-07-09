@@ -1,0 +1,42 @@
+{
+    "ssl": {
+        "promotion": 2000,
+        "demotion": 1865
+    },
+    "gc3": {
+        "promotion": 1859,
+        "demotion": 1714
+    },
+    "gc2": {
+        "promotion": 1705,
+        "demotion": 1574
+    },
+    "gc1": {
+        "promotion": 1557,
+        "demotion": 1424
+    },
+    "c3": {
+        "promotion": 1434,
+        "demotion": 1302
+    },
+    "c2": {
+        "promotion": 1314,
+        "demotion": 1181
+    },
+    "c1": {
+        "promotion": 1194,
+        "demotion": 1061
+    },
+    "d3": {
+        "promotion": 1075,
+        "demotion": 981
+    },
+    "d2": {
+        "promotion": 995,
+        "demotion": 901
+    },
+    "d1": {
+        "promotion": 915,
+        "demotion": 821
+    }
+}

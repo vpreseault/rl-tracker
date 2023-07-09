@@ -1,5 +1,7 @@
 from datetime import date
 import math
+import json
+
 
 
 class Session:
@@ -9,6 +11,15 @@ class Session:
         print(f"Starting MMR: {startMmr}")
         self.startMmr = startMmr
         self.endMmr = startMmr
+        self.currentMmr = startMmr
+        self.mmrFactor = 9
+
+        file = open("rankDistribution.json", "r")
+        data = json.load(file)
+        file.close()
+        self.rankDistribution = data
+        self.currentRank = self.calculateRank(startMmr)
+
         self.wins = 0
         self.losses = 0
         self.games = []
@@ -24,6 +35,7 @@ class Session:
                 looping = False
             else:
                 gameResult = self.logGameData(gameScore)
+                self.checkRankChange(self.currentMmr)
 
                 self.games.append(gameResult)
                 if gameResult == -1:
@@ -45,8 +57,10 @@ class Session:
         self.scores.append({"myScore": myScore, "opponentScore": opponentScore})
         if myScore > opponentScore:
             self.wins += 1
+            self.currentMmr += self.mmrFactor
             return 1
         self.losses += 1
+        self.currentMmr -= self.mmrFactor
         return -1
 
     def endSessionDebrief(self):
@@ -73,3 +87,15 @@ class Session:
             self.startMmr,
             self.endMmr,
         )
+
+    def calculateRank(self, mmr):
+        for rank in reversed(self.rankDistribution):
+            if (mmr < self.rankDistribution[rank]["promotion"] and mmr > self.rankDistribution[rank]["demotion"]):
+                return rank
+
+
+    def checkRankChange(self, currentMmr):
+        currentRank = self.calculateRank(currentMmr)
+        if currentRank != self.currentRank and self.currentMmr > self.startMmr:
+            self.calculateRank = currentRank
+            print(f"That's {currentRank}! Well done mate.")
