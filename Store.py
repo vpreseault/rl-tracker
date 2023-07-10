@@ -17,13 +17,13 @@ class Store:
     def addSession(self, date, wins, losses, winrate, games, scores, startMmr, endMmr):
         session = {
             "date": date,
+            "start_mmr": startMmr,
+            "end_mmr": endMmr,
             "wins": wins,
             "losses": losses,
             "winrate": winrate,
             "games": games,
             "scores": scores,
-            "start_mmr": startMmr,
-            "end_mmr": endMmr,
         }
         self.data["s14"]["sessions"].append(session)
         self.updateCurrentMmr(endMmr)

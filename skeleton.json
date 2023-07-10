@@ -11,13 +11,13 @@
     "sessions": [
       {
         "date": "",
+        "start_mmr": 0,
+        "end_mmr": 0,
         "wins": 0,
         "losses": 0,
         "winrate": 0,
         "games": [],
-        "scores": [{ "myScore": 0, "opponentScore": 0 }],
-        "start_mmr": 0,
-        "end_mmr": 0
+        "scores": [{ "myScore": 0, "opponentScore": 0 }]
       }
     ]
   }
