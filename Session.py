@@ -29,7 +29,12 @@ class Session:
     def loop(self):
         looping = True
         while looping:
-            gameScore = input(f"Game result: ")
+            while True:
+                gameScore = input(f"Game result: ").strip()
+                if self.gameResultInputIsSafe(gameScore):
+                    break
+
+                print("Please enter valid game score (Format ##).")   
 
             if gameScore == "q":
                 looping = False
@@ -104,3 +109,13 @@ class Session:
         if currentRank != self.startingRank and self.currentMmr > self.startMmr:
             self.calculateRank = currentRank
             print(f"That's {currentRank}! Well done mate.")
+
+    def gameResultInputIsSafe(self, input):
+        # accepted values: q, ##
+        if input.isdigit() and len(input) == 2:
+            # two digit number confirmed
+            return True
+        elif input == "q":
+            # exit command confirmed
+            return True
+        return False
