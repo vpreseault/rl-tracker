@@ -18,7 +18,7 @@ class Session:
         data = json.load(file)
         file.close()
         self.rankDistribution = data
-        self.currentRank = self.calculateRank(startMmr)
+        self.startingRank = self.calculateRank(startMmr)
 
         self.wins = 0
         self.losses = 0
@@ -29,54 +29,38 @@ class Session:
     def loop(self):
         looping = True
         while looping:
-            # quit loop even without two losses
             gameScore = input(f"Game result: ")
+
             if gameScore == "q":
                 looping = False
             else:
-                gameResult = self.logGameData(gameScore)
-                self.checkRankChange(self.currentMmr)
+                myScore, opponentScore = self.seperateToIndividualScores(gameScore)
+                self.scores.append({"myScore": myScore, "opponentScore": opponentScore})
 
+                gameResult = self.checkWin(myScore, opponentScore)
                 self.games.append(gameResult)
-                if gameResult == -1:
-                    if self.losses > 1:
-                        pitConfirm = ""
-                        while pitConfirm != "y" and pitConfirm != "n":
-                            pitConfirm = input(
-                                "Box. Box. Losses are stacking. End session? (y/n) "
-                            )
 
-                        if pitConfirm == "y":
+                if gameResult == 1:
+                    self.wins += 1
+                    self.currentMmr += self.mmrFactor
+                    self.checkRankChange(self.currentMmr)
+                else:
+                    self.losses += 1
+                    self.currentMmr -= self.mmrFactor
+
+                    if self.losses > 1:
+                        stopSessionInput = ""
+                        while stopSessionInput != "y" and stopSessionInput != "n":
+                            stopSessionInput = input(
+                                "Box. Box. Losses are stacking. End session? (y/n) "
+                            ).strip()
+
+                        if stopSessionInput == "y":
                             looping = False
 
-        self.endSessionDebrief()
-
-    def logGameData(self, score):
-        myScore = int(score[0])
-        opponentScore = int(score[1])
-        self.scores.append({"myScore": myScore, "opponentScore": opponentScore})
-        if myScore > opponentScore:
-            self.wins += 1
-            self.currentMmr += self.mmrFactor
-            return 1
-        self.losses += 1
-        self.currentMmr -= self.mmrFactor
-        return -1
-
-    def endSessionDebrief(self):
-        DASH_FACTOR = 41
-        
         gamesPlayed = self.wins + self.losses
         winrate = math.floor((self.wins / gamesPlayed)*100)
-
-        self.endMmr = int(input("What is the ending MMR? "))
-        print("-" * DASH_FACTOR)
-        print(f"{'-'*3} End of Session Debrief {self.date} {'-'*3}")
-        print(f"Games played: \n{gamesPlayed}\n")
-        print(f"Wins: {self.wins}, Losses: {self.losses}, winrate: {winrate}%\n")
-        print(f"MMR +/-: \n{self.endMmr - self.startMmr}\n")
-        input("-" * DASH_FACTOR)
-
+        self.endSessionDebrief(gamesPlayed, winrate)
         self.store.addSession(
             self.date,
             self.wins,
@@ -88,6 +72,26 @@ class Session:
             self.endMmr,
         )
 
+    def seperateToIndividualScores(self, input):
+        return int(input[0]), int(input[1])
+
+    def checkWin(self, myScore, opponentScore):
+        if myScore > opponentScore:
+            return 1        
+        return -1
+
+    def endSessionDebrief(self, gamesPlayed, winrate):
+        DASH_FACTOR = 41
+
+        # validate input
+        self.endMmr = int(input("What is the ending MMR? ").strip())
+        print("-" * DASH_FACTOR)
+        print(f"{'-'*3} End of Session Debrief {self.date} {'-'*3}")
+        print(f"Games played: \n{gamesPlayed}\n")
+        print(f"Wins: {self.wins}, Losses: {self.losses}, winrate: {winrate}%\n")
+        print(f"MMR +/-: \n{self.endMmr - self.startMmr}\n")
+        input("-" * DASH_FACTOR)
+
     def calculateRank(self, mmr):
         for rank in reversed(self.rankDistribution):
             if (mmr < self.rankDistribution[rank]["promotion"] and mmr > self.rankDistribution[rank]["demotion"]):
@@ -96,6 +100,7 @@ class Session:
 
     def checkRankChange(self, currentMmr):
         currentRank = self.calculateRank(currentMmr)
-        if currentRank != self.currentRank and self.currentMmr > self.startMmr:
+        # print message if rank has changed and it has increased (no message for demotions)
+        if currentRank != self.startingRank and self.currentMmr > self.startMmr:
             self.calculateRank = currentRank
             print(f"That's {currentRank}! Well done mate.")
