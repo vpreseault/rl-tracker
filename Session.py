@@ -12,10 +12,7 @@ class Session:
         self.currentMmr = startMmr
         self.mmrFactor = 9
 
-        file = open("rankDistribution.json", "r")
-        data = json.load(file)
-        file.close()
-        self.rankDistribution = data
+        self.rankDistribution = getRankDistribution()
         self.startingRank = self.calculateRank(startMmr)
 
         self.wins = 0
