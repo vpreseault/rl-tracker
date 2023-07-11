@@ -1,6 +1,7 @@
 from datetime import date
-import math
 import json
+
+from Utility import *
 
 
 class Session:
@@ -56,7 +57,7 @@ class Session:
                             looping = False
 
         gamesPlayed = self.wins + self.losses
-        winrate = math.floor((self.wins / gamesPlayed) * 100)
+        winrate = calculateWinrate(self.wins, gamesPlayed)
         self.endSessionDebrief(gamesPlayed, winrate)
         return {
             "date": self.date,

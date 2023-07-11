@@ -1,5 +1,6 @@
 import json
-import math
+
+from Utility import *
 
 
 class Store:
@@ -37,13 +38,12 @@ class Store:
     def updateWinsLosses(self, wins, losses):
         self.data["s14"]["regular_season"]["wins"] += wins
         self.data["s14"]["regular_season"]["losses"] += losses
-        self.data["s14"]["regular_season"]["winrate"] = math.floor(
+        self.data["s14"]["regular_season"]["winrate"] = calculateWinrate(
+            self.data["s14"]["regular_season"]["wins"],
             (
                 self.data["s14"]["regular_season"]["wins"]
-                / self.data["s14"]["regular_season"]["wins"]
                 + self.data["s14"]["regular_season"]["losses"]
-            )
-            * 100
+            ),
         )
 
     def getCurrentMmr(self):
