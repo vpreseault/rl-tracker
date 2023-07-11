@@ -15,21 +15,10 @@ class Store:
         json.dump(self.data, file)
         file.close()
 
-    def addSession(self, date, wins, losses, winrate, games, scores, startMmr, endMmr):
-        session = {
-            "date": date,
-            "chat": True,
-            "start_mmr": startMmr,
-            "end_mmr": endMmr,
-            "wins": wins,
-            "losses": losses,
-            "winrate": winrate,
-            "games": games,
-            "scores": scores,
-        }
-        self.data["s14"]["sessions"].append(session)
-        self.updateCurrentMmr(endMmr)
-        self.updateWinsLosses(wins, losses)
+    def addSession(self, sessionResult):
+        self.data["s14"]["sessions"].append(sessionResult)
+        self.updateCurrentMmr(sessionResult["endMmr"])
+        self.updateWinsLosses(sessionResult["wins"], sessionResult["losses"])
         self.write()
 
     def updateCurrentMmr(self, newMmr):
