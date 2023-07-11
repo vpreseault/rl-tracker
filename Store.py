@@ -17,6 +17,7 @@ class Store:
     def addSession(self, date, wins, losses, winrate, games, scores, startMmr, endMmr):
         session = {
             "date": date,
+            "chat": True,
             "start_mmr": startMmr,
             "end_mmr": endMmr,
             "wins": wins,
