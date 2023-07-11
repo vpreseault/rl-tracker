@@ -3,7 +3,6 @@ import math
 import json
 
 
-
 class Session:
     def __init__(self, store, startMmr):
         self.store = store
@@ -29,12 +28,7 @@ class Session:
     def loop(self):
         looping = True
         while looping:
-            while True:
-                gameScore = input(f"Game result: ").strip()
-                if self.gameResultInputIsSafe(gameScore):
-                    break
-
-                print("Please enter valid game score (Format ##).")   
+            gameScore = self.getGameScoreInput()
 
             if gameScore == "q":
                 looping = False
@@ -64,7 +58,7 @@ class Session:
                             looping = False
 
         gamesPlayed = self.wins + self.losses
-        winrate = math.floor((self.wins / gamesPlayed)*100)
+        winrate = math.floor((self.wins / gamesPlayed) * 100)
         self.endSessionDebrief(gamesPlayed, winrate)
         self.store.addSession(
             self.date,
@@ -82,13 +76,13 @@ class Session:
 
     def checkWin(self, myScore, opponentScore):
         if myScore > opponentScore:
-            return 1        
+            return 1
         return -1
 
     def endSessionDebrief(self, gamesPlayed, winrate):
         DASH_FACTOR = 41
 
-        # validate input
+        # TODO validate input
         self.endMmr = int(input("What is the ending MMR? ").strip())
         print("-" * DASH_FACTOR)
         print(f"{'-'*3} End of Session Debrief {self.date} {'-'*3}")
@@ -99,9 +93,11 @@ class Session:
 
     def calculateRank(self, mmr):
         for rank in reversed(self.rankDistribution):
-            if (mmr < self.rankDistribution[rank]["promotion"] and mmr > self.rankDistribution[rank]["demotion"]):
+            if (
+                mmr < self.rankDistribution[rank]["promotion"]
+                and mmr > self.rankDistribution[rank]["demotion"]
+            ):
                 return rank
-
 
     def checkRankChange(self, currentMmr):
         currentRank = self.calculateRank(currentMmr)
@@ -110,12 +106,30 @@ class Session:
             self.calculateRank = currentRank
             print(f"That's {currentRank}! Well done mate.")
 
+    def editLastScoreInput(self):
+        print("Re-enter last game's result.")
+        gameScore = self.getGameScoreInput()
+        myScore, opponentScore = self.seperateToIndividualScores(gameScore)
+        self.scores[-1]["myScore"] = myScore
+        self.scores[-1]["opponentScore"] = opponentScore
+
+    def getGameScoreInput(self):
+        while True:
+            gameScore = input(f"Game result: ").strip()
+            if self.gameResultInputIsSafe(gameScore):
+                return gameScore
+
     def gameResultInputIsSafe(self, input):
-        # accepted values: q, ##
+        # accepted values: q, e, ##
         if input.isdigit() and len(input) == 2:
             # two digit number confirmed
             return True
         elif input == "q":
             # exit command confirmed
             return True
+        elif input == "e":
+            self.editLastScoreInput()
+            return False
+
+        print("Please enter valid game score (Format ##).")
         return False
