@@ -4,9 +4,7 @@ import json
 
 
 class Session:
-    def __init__(self, store, startMmr):
-        self.store = store
-
+    def __init__(self, startMmr):
         print(f"Starting MMR: {startMmr}")
         self.startMmr = startMmr
         self.endMmr = startMmr
@@ -60,16 +58,17 @@ class Session:
         gamesPlayed = self.wins + self.losses
         winrate = math.floor((self.wins / gamesPlayed) * 100)
         self.endSessionDebrief(gamesPlayed, winrate)
-        self.store.addSession(
-            self.date,
-            self.wins,
-            self.losses,
-            winrate,
-            self.games,
-            self.scores,
-            self.startMmr,
-            self.endMmr,
-        )
+        return {
+            "date": self.date,
+            "chat": True,
+            "start_mmr": self.startMmr,
+            "end_mmr": self.endMmr,
+            "wins": self.wins,
+            "losses": self.losses,
+            "winrate": winrate,
+            "games": self.games,
+            "scores": self.scores,
+        }
 
     def seperateToIndividualScores(self, input):
         return int(input[0]), int(input[1])
