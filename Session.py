@@ -1,16 +1,18 @@
 from datetime import date
-import json
 
 from Utility import *
 
 
 class Session:
     def __init__(self, startMmr):
+        self.date = str(date.today())
+
         print(f"Starting MMR: {startMmr}")
         self.startMmr = startMmr
         self.endMmr = startMmr
         self.currentMmr = startMmr
         self.mmrFactor = 9
+        self.estimatedMmr = []
 
         self.rankDistribution = getRankDistribution()
         self.startingRank = self.calculateRank(startMmr)
@@ -19,7 +21,6 @@ class Session:
         self.losses = 0
         self.games = []
         self.scores = []
-        self.date = str(date.today())
 
     def loop(self):
         looping = True
@@ -53,6 +54,8 @@ class Session:
                         if stopSessionInput == "y":
                             looping = False
 
+                self.estimatedMmr.append(self.currentMmr)
+
         gamesPlayed = self.wins + self.losses
         winrate = calculateWinrate(self.wins, gamesPlayed)
         self.endSessionDebrief(gamesPlayed, winrate)
@@ -61,6 +64,7 @@ class Session:
             "chat": True,
             "start_mmr": self.startMmr,
             "end_mmr": self.endMmr,
+            "estimated_mmr": self.estimatedMmr,
             "wins": self.wins,
             "losses": self.losses,
             "winrate": winrate,
