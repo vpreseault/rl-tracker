@@ -22,18 +22,18 @@ class Store:
         self.write()
 
     def updateCurrentMmr(self, newMmr):
-        self.data["s14"]["regular_season"]["current_mmr"] = newMmr
+        self.data["s14"]["regularSeason"]["currentMmr"] = newMmr
 
     def updateWinsLosses(self, wins, losses):
-        self.data["s14"]["regular_season"]["wins"] += wins
-        self.data["s14"]["regular_season"]["losses"] += losses
-        self.data["s14"]["regular_season"]["winrate"] = calculateWinrate(
-            self.data["s14"]["regular_season"]["wins"],
+        self.data["s14"]["regularSeason"]["wins"] += wins
+        self.data["s14"]["regularSeason"]["losses"] += losses
+        self.data["s14"]["regularSeason"]["winrate"] = calculateWinrate(
+            self.data["s14"]["regularSeason"]["wins"],
             (
-                self.data["s14"]["regular_season"]["wins"]
-                + self.data["s14"]["regular_season"]["losses"]
+                self.data["s14"]["regularSeason"]["wins"]
+                + self.data["s14"]["regularSeason"]["losses"]
             ),
         )
 
     def getCurrentMmr(self):
-        return self.data["s14"]["regular_season"]["current_mmr"]
+        return self.data["s14"]["regularSeason"]["currentMmr"]

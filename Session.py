@@ -62,9 +62,9 @@ class Session:
         return {
             "date": self.date,
             "chat": True,
-            "start_mmr": self.startMmr,
-            "end_mmr": self.endMmr,
-            "estimated_mmr": self.estimatedMmr,
+            "startMmr": self.startMmr,
+            "endMmr": self.endMmr,
+            "estimatedMmr": self.estimatedMmr,
             "wins": self.wins,
             "losses": self.losses,
             "winrate": winrate,
