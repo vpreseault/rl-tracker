@@ -85,6 +85,7 @@ class Session:
 
         # TODO validate input
         self.endMmr = int(input("What is the ending MMR? ").strip())
+        self.estimatedMmr[-1] = self.endMmr
         print("-" * DASH_FACTOR)
         print(f"{'-'*3} End of Session Debrief {self.date} {'-'*3}")
         print(f"Games played: \n{gamesPlayed}\n")
