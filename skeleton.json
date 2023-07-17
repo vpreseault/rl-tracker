@@ -1,27 +1,79 @@
 {
   "s14": {
-    "regularSeason": {
-      "wins": 0,
-      "losses": 0,
-      "winrate": 0,
-      "startMmr": 0,
-      "currentMmr": 0,
-      "endMmr": 0
-    },
-    "sessions": [
-      {
-        "date": "",
-        "time": "",
-        "chat": true,
-        "startMmr": 0,
-        "endMmr": 0,
-        "estimatedMmr": [],
+    "triples": {
+      "regularSeason": {
         "wins": 0,
         "losses": 0,
         "winrate": 0,
-        "games": [],
-        "scores": [{ "myScore": 0, "opponentScore": 0 }]
-      }
-    ]
+        "startMmr": 0,
+        "currentMmr": 0,
+        "endMmr": 0
+      },
+      "sessions": [
+        {
+          "date": "",
+          "time": "",
+          "chat": true,
+          "startMmr": 0,
+          "endMmr": 0,
+          "estimatedMmr": [],
+          "wins": 0,
+          "losses": 0,
+          "winrate": 0,
+          "games": [],
+          "scores": [{ "myScore": 0, "opponentScore": 0 }]
+        }
+      ]
+    },
+    "doubles": {
+      "regularSeason": {
+        "wins": 0,
+        "losses": 0,
+        "winrate": 0,
+        "startMmr": 0,
+        "currentMmr": 0,
+        "endMmr": 0
+      },
+      "sessions": [
+        {
+          "date": "",
+          "time": "",
+          "chat": true,
+          "startMmr": 0,
+          "endMmr": 0,
+          "estimatedMmr": [],
+          "wins": 0,
+          "losses": 0,
+          "winrate": 0,
+          "games": [],
+          "scores": [{ "myScore": 0, "opponentScore": 0 }]
+        }
+      ]
+    },
+    "singles": {
+      "regularSeason": {
+        "wins": 0,
+        "losses": 0,
+        "winrate": 0,
+        "startMmr": 0,
+        "currentMmr": 0,
+        "endMmr": 0
+      },
+      "sessions": [
+        {
+          "date": "",
+          "time": "",
+          "chat": true,
+          "startMmr": 0,
+          "endMmr": 0,
+          "estimatedMmr": [],
+          "wins": 0,
+          "losses": 0,
+          "winrate": 0,
+          "games": [],
+          "scores": [{ "myScore": 0, "opponentScore": 0 }]
+        }
+      ]
+    }
   }
 }
