@@ -11,6 +11,8 @@
     "sessions": [
       {
         "date": "",
+        "time": "",
+        "chat": true,
         "startMmr": 0,
         "endMmr": 0,
         "estimatedMmr": [],
