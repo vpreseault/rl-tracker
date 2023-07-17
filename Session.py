@@ -1,11 +1,13 @@
-from datetime import date
+from datetime import datetime
 
 from Utility import *
 
 
 class Session:
     def __init__(self, startMmr):
-        self.date = str(date.today())
+        timestamp = datetime.now()
+        self.date = timestamp.date().strftime("%Y-%m-%d")
+        self.time = timestamp.strftime("%H:%M")
 
         print(f"Starting MMR: {startMmr}")
         self.startMmr = startMmr
@@ -61,6 +63,7 @@ class Session:
         self.endSessionDebrief(gamesPlayed, winrate)
         return {
             "date": self.date,
+            "time": self.time,
             "chat": True,
             "startMmr": self.startMmr,
             "endMmr": self.endMmr,
