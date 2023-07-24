@@ -18,6 +18,7 @@ class Session:
 
         self.rankDistribution = getRankDistribution()
         self.startingRank = self.calculateRank(startMmr)
+        self.currentRank = self.startingRank
 
         self.wins = 0
         self.losses = 0
@@ -106,10 +107,15 @@ class Session:
 
     def checkRankChange(self, currentMmr):
         currentRank = self.calculateRank(currentMmr)
-        # print message if rank has changed and it has increased (no message for demotions)
-        if currentRank != self.startingRank and self.currentMmr > self.startMmr:
-            self.calculateRank = currentRank
-            print(f"That's {currentRank}! Well done mate.")
+        if currentRank != self.currentRank:
+            self.currentRank = currentRank
+
+            # print message only if rank has increased (no message for demotions)
+            if (
+                self.currentMmr > self.startMmr
+                and self.currentRank != self.startingRank
+            ):
+                print(f"That's {currentRank}! Well done mate.")
 
     def editLastScoreInput(self):
         print("Re-enter last game's result.")
