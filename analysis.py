@@ -53,8 +53,51 @@ def chatNoChat():
     return plotData
 
 
-df = pd.DataFrame(eloOverSeason())
-sns.set_theme(style="whitegrid")
-sns.lineplot(data=df, x="sessionNumber", y="elo", palette="pastel", alpha=0.75)
+def scoreOccurence():
+    plotData = {
+        "result": [],
+        "team": [],
+        "occurences": [],
+    }
+    for i in range(0, 20):
+        plotData["occurences"].append(0)
+        plotData["result"].append(i // 2)
 
-plt.show()
+        if i % 2 == 0:
+            plotData["team"].append("Friendly")
+        else:
+            plotData["team"].append("Enemy")
+
+    for session in data["s14"]["doubles"]["sessions"]:
+        try:
+            if session["scores"]:
+                for game in session["scores"]:
+                    fIndex = plotData["result"].index(game["myScore"])
+                    eIndex = plotData["result"].index(game["opponentScore"]) + 1
+
+                    plotData["occurences"][fIndex] += 1
+                    plotData["occurences"][eIndex] += 1
+
+        except Exception as e:
+            print(e)
+
+    df = pd.DataFrame(plotData)
+    sns.set_theme(style="whitegrid")
+    sns.catplot(
+        data=df,
+        kind="bar",
+        x="result",
+        y="occurences",
+        hue="team",
+        palette="dark",
+        alpha=0.75,
+    )
+    plt.show()
+
+
+scoreOccurence()
+# df = pd.DataFrame(eloOverSeason())
+# sns.set_theme(style="whitegrid")
+# sns.lineplot(data=df, x="sessionNumber", y="elo", palette="pastel", alpha=0.75)
+
+# plt.show()
