@@ -18,24 +18,24 @@ class Store:
         file.close()
 
     def addSession(self, sessionResult):
-        self.data["s14"][self.gamemode]["sessions"].append(sessionResult)
+        self.data["s13"][self.gamemode]["sessions"].append(sessionResult)
         self.updateCurrentMmr(sessionResult["endMmr"])
         self.updateWinsLosses(sessionResult["wins"], sessionResult["losses"])
         self.write()
 
     def updateCurrentMmr(self, newMmr):
-        self.data["s14"][self.gamemode]["regularSeason"]["currentMmr"] = newMmr
+        self.data["s13"][self.gamemode]["regularSeason"]["currentMmr"] = newMmr
 
     def updateWinsLosses(self, wins, losses):
-        self.data["s14"][self.gamemode]["regularSeason"]["wins"] += wins
-        self.data["s14"][self.gamemode]["regularSeason"]["losses"] += losses
-        self.data["s14"][self.gamemode]["regularSeason"]["winrate"] = calculateWinrate(
-            self.data["s14"][self.gamemode]["regularSeason"]["wins"],
+        self.data["s13"][self.gamemode]["regularSeason"]["wins"] += wins
+        self.data["s13"][self.gamemode]["regularSeason"]["losses"] += losses
+        self.data["s13"][self.gamemode]["regularSeason"]["winrate"] = calculateWinrate(
+            self.data["s13"][self.gamemode]["regularSeason"]["wins"],
             (
-                self.data["s14"][self.gamemode]["regularSeason"]["wins"]
-                + self.data["s14"][self.gamemode]["regularSeason"]["losses"]
+                self.data["s13"][self.gamemode]["regularSeason"]["wins"]
+                + self.data["s13"][self.gamemode]["regularSeason"]["losses"]
             ),
         )
 
     def getCurrentMmr(self):
-        return self.data["s14"][self.gamemode]["regularSeason"]["currentMmr"]
+        return self.data["s13"][self.gamemode]["regularSeason"]["currentMmr"]
