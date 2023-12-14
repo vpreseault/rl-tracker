@@ -60,6 +60,9 @@ class Session:
                 self.estimatedMmr.append(self.currentMmr)
 
         gamesPlayed = self.wins + self.losses
+        if gamesPlayed <= 0:
+            return False
+
         winrate = calculateWinrate(self.wins, gamesPlayed)
         self.endSessionDebrief(gamesPlayed, winrate)
         return {
