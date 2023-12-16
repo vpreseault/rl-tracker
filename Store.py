@@ -11,6 +11,7 @@ class Store:
         self.data = data
 
         self.gamemode = gamemode
+        self.regularSeason = self.data["s13"][self.gamemode]["regularSeason"]
 
     def write(self):
         file = open("data.json", "w")
@@ -24,18 +25,15 @@ class Store:
         self.write()
 
     def updateCurrentMmr(self, newMmr):
-        self.data["s13"][self.gamemode]["regularSeason"]["currentMmr"] = newMmr
+        self.regularSeason["currentMmr"] = newMmr
 
     def updateWinsLosses(self, wins, losses):
-        self.data["s13"][self.gamemode]["regularSeason"]["wins"] += wins
-        self.data["s13"][self.gamemode]["regularSeason"]["losses"] += losses
-        self.data["s13"][self.gamemode]["regularSeason"]["winrate"] = calculateWinrate(
-            self.data["s13"][self.gamemode]["regularSeason"]["wins"],
-            (
-                self.data["s13"][self.gamemode]["regularSeason"]["wins"]
-                + self.data["s13"][self.gamemode]["regularSeason"]["losses"]
-            ),
+        self.regularSeason["wins"] += wins
+        self.regularSeason["losses"] += losses
+        self.regularSeason["winrate"] = calculateWinrate(
+            self.regularSeason["wins"],
+            (self.regularSeason["wins"] + self.regularSeason["losses"]),
         )
 
     def getCurrentMmr(self):
-        return self.data["s13"][self.gamemode]["regularSeason"]["currentMmr"]
+        return self.regularSeason["currentMmr"]
