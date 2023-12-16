@@ -10,6 +10,7 @@ class Store:
         file.close()
         self.data = data
         self.gamemode = gamemode
+        self.regularSeason = self.data["s13"][self.gamemode]["regularSeason"]
 
         self.regularSeason = data["s13"][gamemode]["regularSeason"]
         self.placements = data["s13"][gamemode]["placements"]

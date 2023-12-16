@@ -17,7 +17,7 @@ def eloOverSeason():
 
     plotData = {"elo": [], "sessionNumber": []}
 
-    for session in data["s14"]["doubles"]["sessions"]:
+    for session in data["s10"]["doubles"]["sessions"]:
         for elo in session["estimatedMmr"]:
             plotData["elo"].append(elo)
             numberOfSessions += 1
@@ -28,7 +28,7 @@ def eloOverSeason():
 
 def resultsAfter3Games():
     plotData = {"results": ["3L", "2L W1", "1L 2W", "3W"], "occurences": [0, 0, 0, 0]}
-    for session in data["s14"]["doubles"]["sessions"]:
+    for session in data["s10"]["doubles"]["sessions"]:
         if len(session["games"]) > 2:
             print(session["games"])
             r = sum(session["games"][:3])
@@ -45,7 +45,7 @@ def resultsAfter3Games():
 
 def chatNoChat():
     plotData = {"results": ["chat", "no chat"], "occurences": [0, 0]}
-    for session in data["s14"]["doubles"]["sessions"]:
+    for session in data["s10"]["doubles"]["sessions"]:
         if session["chat"]:
             plotData["occurences"][0] += 1
         else:
@@ -68,7 +68,7 @@ def scoreOccurence():
         else:
             plotData["team"].append("Enemy")
 
-    for session in data["s14"]["doubles"]["sessions"]:
+    for session in data["s10"]["doubles"]["sessions"]:
         try:
             if session["scores"]:
                 for game in session["scores"]:
@@ -95,9 +95,16 @@ def scoreOccurence():
     plt.show()
 
 
-scoreOccurence()
-# df = pd.DataFrame(eloOverSeason())
-# sns.set_theme(style="whitegrid")
-# sns.lineplot(data=df, x="sessionNumber", y="elo", palette="pastel", alpha=0.75)
+def sessionLength():
+    plotData = {
+        "length": [],
+        "occurences": [],
+    }
 
-# plt.show()
+
+# scoreOccurence()
+df = pd.DataFrame(eloOverSeason())
+sns.set_theme(style="whitegrid")
+sns.lineplot(data=df, x="sessionNumber", y="elo", palette="pastel", alpha=0.75)
+
+plt.show()
