@@ -68,7 +68,8 @@ class Session:
         return {
             "date": self.date,
             "time": self.time,
-            "chat": True,
+            # "chat": True,
+            "solo": True,
             "startMmr": self.startMmr,
             "endMmr": self.endMmr,
             "estimatedMmr": self.estimatedMmr,
